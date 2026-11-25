@@ -1,0 +1,19 @@
+$ curl --noproxy '*' -k --resolve homework23.test:30443:172.22.0.2 -fsSi https://homework23.test:30443/
+HTTP/2 200 
+accept-ranges: bytes
+content-type: text/html
+date: Wed, 25 Nov 2026 11:02:17 GMT
+etag: "6b06bcf3-137"
+last-modified: Wed, 25 Nov 2026 10:48:19 GMT
+server: nginx/1.28.3
+content-length: 311
+
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><title>Netology: HTTPS</title></head>
+<body>
+  <h1>Netology: HTTPS работает</h1>
+  <p>Выполнил: Стрельников Александр. Задание 2.3.</p>
+  <p>ConfigMap secure-page + TLS Secret + Ingress.</p>
+</body>
+</html>

@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: multitool-config
+  namespace: homework-23
+data:
+  HTTP_PORT: "8080"
+  HTTPS_PORT: "8443"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: web-page
+  namespace: homework-23
+data:
+  index.html: |
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head><meta charset="UTF-8"><title>Netology: ConfigMap</title></head>
+    <body>
+      <h1>Netology: ConfigMap</h1>
+      <p>Выполнил: Стрельников Александр. Задание 2.3.</p>
+      <p>Страница nginx подключена из ConfigMap web-page.</p>
+    </body>
+    </html>

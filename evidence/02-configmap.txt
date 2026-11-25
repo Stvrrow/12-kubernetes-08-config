@@ -1,0 +1,32 @@
+$ kubectl -n homework-23 get configmaps
+NAME               DATA   AGE
+kube-root-ca.crt   1      3m20s
+multitool-config   2      55s
+secure-page        1      50s
+web-page           1      55s
+
+$ kubectl -n homework-23 get pods -l app=web
+NAME                   READY   STATUS    RESTARTS   AGE
+web-76c6f9c545-vlf45   2/2     Running   0          55s
+
+$ kubectl -n homework-23 exec deployment/web -c multitool -- printenv HTTP_PORT HTTPS_PORT
+8080
+8443
+
+$ kubectl -n homework-23 get service web
+NAME   TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)           AGE
+web    ClusterIP   10.96.221.22   <none>        80/TCP,8080/TCP   55s
+
+$ kubectl -n homework-23 exec deployment/web -c multitool -- curl -fsS http://web:80
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><title>Netology: ConfigMap</title></head>
+<body>
+  <h1>Netology: ConfigMap</h1>
+  <p>Выполнил: Стрельников Александр. Задание 2.3.</p>
+  <p>Страница nginx подключена из ConfigMap web-page.</p>
+</body>
+</html>
+
+$ kubectl -n homework-23 exec deployment/web -c nginx -- wget -qO- http://web:8080
+WBITT Network MultiTool (with NGINX) - web-76c6f9c545-vlf45 - 10.244.0.16 - HTTP: 8080 , HTTPS: 8443 . (Formerly praqma/network-multitool)

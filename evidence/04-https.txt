@@ -1,0 +1,37 @@
+$ openssl x509 -in certs/tls.crt -noout -subject -issuer -ext subjectAltName
+subject=CN = homework23.test, O = Netology homework
+issuer=CN = homework23.test, O = Netology homework
+X509v3 Subject Alternative Name: 
+    DNS:homework23.test
+
+$ openssl s_client -connect 172.22.0.2:30443 -servername homework23.test -CAfile certs/tls.crt -verify_hostname homework23.test -verify_return_error -brief
+CONNECTION ESTABLISHED
+Protocol version: TLSv1.3
+Ciphersuite: TLS_AES_128_GCM_SHA256
+Peer certificate: CN = homework23.test, O = Netology homework
+Hash used: SHA256
+Signature type: RSA-PSS
+Verification: OK
+Verified peername: homework23.test
+Server Temp Key: X25519, 253 bits
+DONE
+
+$ curl --noproxy '*' --cacert certs/tls.crt --resolve homework23.test:30443:172.22.0.2 -fsSi https://homework23.test:30443/
+HTTP/2 200 
+accept-ranges: bytes
+content-type: text/html
+date: Wed, 25 Nov 2026 10:48:43 GMT
+etag: "6b06bcf3-137"
+last-modified: Wed, 25 Nov 2026 10:48:19 GMT
+server: nginx/1.28.3
+content-length: 311
+
+<!DOCTYPE html>
+<html lang="ru">
+<head><meta charset="UTF-8"><title>Netology: HTTPS</title></head>
+<body>
+  <h1>Netology: HTTPS работает</h1>
+  <p>Выполнил: Стрельников Александр. Задание 2.3.</p>
+  <p>ConfigMap secure-page + TLS Secret + Ingress.</p>
+</body>
+</html>

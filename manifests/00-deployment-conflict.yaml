@@ -1,0 +1,49 @@
+# Только для воспроизведения конфликта портов; не применять как итоговый манифест.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: homework-23
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.28-alpine
+          ports:
+            - name: nginx-http
+              containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: nginx-http
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+        - name: multitool
+          image: wbitt/network-multitool:alpine-minimal
+          ports:
+            - name: multitool-http
+              containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /
+              port: multitool-http
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi

@@ -1,0 +1,15 @@
+$ kubectl -n homework-23 get pods -l app=web
+NAME                   READY   STATUS   RESTARTS      AGE
+web-646f9bb769-rgzfl   1/2     Error    4 (92s ago)   2m24s
+
+$ kubectl -n homework-23 logs deployment/web -c multitool --tail=10
+2026/11/25 10:47:35 [emerg] 1#1: bind() to 0.0.0.0:80 failed (98: Address in use)
+nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address in use)
+2026/11/25 10:47:35 [emerg] 1#1: bind() to 0.0.0.0:80 failed (98: Address in use)
+nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address in use)
+2026/11/25 10:47:35 [emerg] 1#1: bind() to 0.0.0.0:80 failed (98: Address in use)
+nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address in use)
+2026/11/25 10:47:35 [emerg] 1#1: bind() to 0.0.0.0:80 failed (98: Address in use)
+nginx: [emerg] bind() to 0.0.0.0:80 failed (98: Address in use)
+2026/11/25 10:47:35 [emerg] 1#1: still could not bind()
+nginx: [emerg] still could not bind()

@@ -1,0 +1,26 @@
+$ kubectl --kubeconfig rbac/developer.kubeconfig auth whoami
+ATTRIBUTE                                           VALUE
+Username                                            developer
+Groups                                              [system:authenticated]
+Extra: authentication.kubernetes.io/credential-id   [X509SHA256=c74529528831eae3891cd7830e3b32095a954a5dc190d2fd879d10aad8cc7dc4]
+
+$ kubectl --kubeconfig rbac/developer.kubeconfig get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+secure-web-5d6d95f8c6-prmcl   1/1     Running   0          14m
+traefik-57cbfc6667-b5fv8      1/1     Running   0          14m
+web-76c6f9c545-vlf45          2/2     Running   0          14m
+
+$ kubectl --kubeconfig rbac/developer.kubeconfig auth can-i get pods/log
+yes
+
+$ kubectl --kubeconfig rbac/developer.kubeconfig auth can-i delete pods
+no
+
+$ kubectl --kubeconfig rbac/developer.kubeconfig auth can-i create pods/exec
+no
+
+$ kubectl --kubeconfig rbac/developer.kubeconfig auth can-i get pods -n homework-14
+no
+
+$ kubectl --kubeconfig rbac/developer.kubeconfig get secrets
+Error from server (Forbidden): secrets is forbidden: User "developer" cannot list resource "secrets" in API group "" in the namespace "homework-23"

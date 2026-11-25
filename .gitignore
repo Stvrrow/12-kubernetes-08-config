@@ -1,0 +1,4 @@
+__pycache__/
+certs/tls.key
+rbac/*.key
+rbac/*.kubeconfig

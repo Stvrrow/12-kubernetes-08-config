@@ -1,0 +1,35 @@
+$ kubectl -n homework-23 get role pod-reader
+NAME         CREATED AT
+pod-reader   2026-11-25T11:00:49Z
+
+$ kubectl -n homework-23 get rolebinding developer-pod-reader
+NAME                   ROLE              AGE
+developer-pod-reader   Role/pod-reader   89s
+
+$ kubectl -n homework-23 get pods --as=developer
+NAME                          READY   STATUS    RESTARTS   AGE
+secure-web-5d6d95f8c6-prmcl   1/1     Running   0          14m
+traefik-57cbfc6667-b5fv8      1/1     Running   0          13m
+web-76c6f9c545-vlf45          2/2     Running   0          14m
+
+$ kubectl -n homework-23 --as=developer logs secure-web-5d6d95f8c6-prmcl --tail=2
+10.244.0.1 - - [25/Nov/2026:11:02:10 +0000] "GET / HTTP/1.1" 200 311 "-" "kube-probe/1.35" "-"
+10.244.0.18 - - [25/Nov/2026:11:02:17 +0000] "GET / HTTP/1.1" 200 311 "-" "curl/8.5.0" "10.244.0.1"
+
+$ bash -o pipefail -c '/home/strelnikovam/vscode/netology/12-kubernetes-03-run-applications/bin/kubectl --kubeconfig /home/strelnikovam/vscode/netology/12-kubernetes-03-run-applications/.kubeconfig -n homework-23 --as=developer describe pod secure-web-5d6d95f8c6-prmcl --show-events=false | head -n 16'
+Name:             secure-web-5d6d95f8c6-prmcl
+Namespace:        homework-23
+Priority:         0
+Service Account:  default
+Node:             netology-13-control-plane/172.22.0.2
+Start Time:       Wed, 25 Nov 2026 13:48:18 +0300
+Labels:           app=secure-web
+                  pod-template-hash=5d6d95f8c6
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.17
+IPs:
+  IP:           10.244.0.17
+Controlled By:  ReplicaSet/secure-web-5d6d95f8c6
+Containers:
+  nginx:

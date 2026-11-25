@@ -1,0 +1,28 @@
+$ kubectl -n homework-23 get deployments
+NAME         READY   UP-TO-DATE   AVAILABLE   AGE
+secure-web   1/1     1            1           23s
+traefik      1/1     1            1           22s
+web          1/1     1            1           2m53s
+
+$ kubectl -n homework-23 get pods
+NAME                          READY   STATUS    RESTARTS   AGE
+secure-web-5d6d95f8c6-prmcl   1/1     Running   0          23s
+traefik-57cbfc6667-b5fv8      1/1     Running   0          22s
+web-76c6f9c545-vlf45          2/2     Running   0          28s
+
+$ kubectl -n homework-23 get services
+NAME         TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)           AGE
+secure-web   ClusterIP   10.96.204.238   <none>        80/TCP            23s
+traefik      NodePort    10.96.140.29    <none>        443:30443/TCP     22s
+web          ClusterIP   10.96.221.22    <none>        80/TCP,8080/TCP   28s
+
+$ kubectl -n homework-23 get secret web-tls
+NAME      TYPE                DATA   AGE
+web-tls   kubernetes.io/tls   2      23s
+
+$ kubectl -n homework-23 get ingress secure-web
+NAME         CLASS                 HOSTS             ADDRESS   PORTS     AGE
+secure-web   homework-23-traefik   homework23.test             80, 443   22s
+
+$ kubectl -n homework-23 get ingress secure-web -o 'jsonpath={.spec.tls}'
+[{"hosts":["homework23.test"],"secretName":"web-tls"}]

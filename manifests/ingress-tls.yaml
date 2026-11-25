@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: secure-web
+  namespace: homework-23
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+spec:
+  ingressClassName: homework-23-traefik
+  tls:
+    - hosts:
+        - homework23.test
+      secretName: web-tls
+  rules:
+    - host: homework23.test
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: secure-web
+                port:
+                  number: 80
